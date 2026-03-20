@@ -1,4 +1,5 @@
 import os
+import re
 import google.generativeai as genai
 from dotenv import load_dotenv
 import PyPDF2
@@ -72,7 +73,7 @@ def analyze_with_gemini(file_path):
     ### CONTEÚDO TSV GERADO ###
     """
     
-    model = genai.GenerativeModel('gemini-2.5-pro')
+    model = genai.GenerativeModel('gemini-2.5-flash')
     response = model.generate_content(prompt)
     
 
@@ -88,9 +89,8 @@ def analyze_with_gemini(file_path):
         cleaned_response = "\n".join(lines)
     
     cleaned_response = cleaned_response.replace("`", "").strip()
-    if cleaned_response.lower().startswith("tsv"):
-        cleaned_response = cleaned_response[3:].strip()
-    if cleaned_response.lower().startswith("csv"):
-        cleaned_response = cleaned_response[3:].strip()
+    # Pylance stub definitions sometimes incorrectly flag valid string slice indexing as an error.
+    # Therefore, we resolve this with a regex substitution to remove leading TSV or CSV markers.
+    cleaned_response = re.sub(r'^(?i)(tsv|csv)', '', cleaned_response).strip()
         
     return cleaned_response

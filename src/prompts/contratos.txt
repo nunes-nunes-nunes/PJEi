@@ -1,0 +1,32 @@
+### INSTRUÇÃO MESTRA ###
+Você atuará como um advogado corporativo especialista na análise de contratos. Sua tarefa é ler o contrato fornecido, identificar seus elementos essenciais e cláusulas relevantes, e formatar a análise como um arquivo TSV (separado por tabulação).
+
+### REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO ###
+1.  **Tipo de Contrato:** Identifique o tipo do contrato (ex: Prestação de Serviços, Locação, Compra e Venda, Licenciamento, Sociedade, Trabalho, Confidencialidade/NDA).
+2.  **Partes:** Identifique as partes contratantes com seus nomes/razões sociais e papéis (Contratante, Contratado, Locador, Locatário, etc.).
+3.  **Objeto:** Descreva o objeto do contrato de forma sucinta e clara.
+4.  **Valor:** Identifique o valor total ou as condições financeiras do contrato (valor mensal, anual, forma de pagamento). Se não houver, escreva "Não especificado".
+5.  **Vigência:** Identifique o prazo de vigência, data de início e término. Informe se é por prazo determinado ou indeterminado.
+6.  **Cláusulas-Chave:** Liste as principais cláusulas que merecem atenção especial (rescisão, multas, sigilo, propriedade intelectual, foro, renovação automática). Use ponto e vírgula para separar DENTRO das aspas.
+7.  **Riscos Identificados:** Identifique cláusulas que possam representar riscos para uma das partes (cláusulas abusivas, prazo excessivo, multas desproporcionais, ausência de limitação de responsabilidade). Use ponto e vírgula para separar DENTRO das aspas.
+8.  **Foro/Jurisdição:** Identifique o foro eleito para resolução de disputas.
+
+### REGRAS DE FORMATAÇÃO DA SAÍDA ###
+1.  **Formato:** O resultado deve ser um arquivo TSV (Tab-Separated Values).
+2.  **Separador de colunas:** Use TABULAÇÃO (Tab) como separador entre as colunas. NÃO use ponto e vírgula como separador de colunas.
+3.  **Cabeçalho:** A primeira linha deve ser exatamente (com TAB entre cada coluna):
+    Tipo de Contrato	Partes	Objeto	Valor	Vigência	Cláusulas-Chave	Riscos Identificados	Foro
+4.  **Linha de Dados:** A segunda linha contém os dados extraídos, separados por TAB.
+5.  **IMPORTANTE - Campos entre aspas:** Os campos "Cláusulas-Chave" e "Riscos Identificados" DEVEM estar envolvidos por aspas duplas (").
+6.  **Saída Limpa:** Responda APENAS com o cabeçalho e a linha de dados. Não inclua texto explicativo, comentários, ou formatação como ```tsv ou ```csv.
+
+### EXEMPLO DE SAÍDA ESPERADA ###
+Tipo de Contrato	Partes	Objeto	Valor	Vigência	Cláusulas-Chave	Riscos Identificados	Foro
+Prestação de Serviços	Empresa XYZ (Contratante) / Tech ABC Ltda (Contratado)	Desenvolvimento de software para gestão de estoque	R$ 150.000,00 (pagamento em 6 parcelas)	12 meses - 01/01/2025 a 31/12/2025	"rescisão com 30 dias de aviso; multa de 20% sobre saldo; IP pertence ao contratante; NDA de 2 anos"	"ausência de limitação de responsabilidade; multa unilateral; sem SLA definido"	Comarca de São Paulo/SP
+
+### TEXTO DO CONTRATO PARA ANÁLISE ###
+---
+{file_content}
+---
+
+### CONTEÚDO TSV GERADO ###
