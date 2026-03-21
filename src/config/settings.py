@@ -7,13 +7,22 @@ espalhados pelo código.
 """
 
 import os
+import sys
 import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
-# --- Caminhos ---
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-SRC_DIR = Path(__file__).resolve().parent.parent
+# --- Caminhos Inteligentes (Módulo Exe ou Script) ---
+if getattr(sys, 'frozen', False):
+    # Rodando empacotado pelo PyInstaller (.exe)
+    # Procurará pelos prompts e o .env na mesma pasta do executável
+    BASE_DIR = Path(sys.executable).parent
+    SRC_DIR = BASE_DIR / "src"
+else:
+    # Rodando como script normal (.py)
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    SRC_DIR = Path(__file__).resolve().parent.parent
+
 PROMPTS_DIR = SRC_DIR / "prompts"
 
 # --- Variáveis de Ambiente ---

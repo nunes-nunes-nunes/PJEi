@@ -27,3 +27,8 @@ env/
 .idea/
 *.swp
 .DS_Store
+
+## PyInstaller e Compiladores
+build/
+dist/
+*.spec
