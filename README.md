@@ -16,10 +16,14 @@ Este projeto foi criado como uma demonstração prática de habilidades em desen
 ## 📸 Demonstração
 1. Tela Inicial do Programa.
 <img width="862" height="691" alt="image" src="https://github.com/user-attachments/assets/b3c33938-1f60-4799-9a79-2ed98c37afa1" />
-3. Escolha do Processo a ser Analisado.
-5. PDF em Processo de Análise.
+
+2. Escolha do Processo a ser Analisado.
+3. PDF em Processo de Análise.
+
 <img width="862" height="691" alt="image" src="https://github.com/user-attachments/assets/ac6ce69f-8233-462e-9dfd-4f9e52f56bf0" />
+
 7. Processo Baixado em CSV.
+
 <img width="844" height="686" alt="image" src="https://github.com/user-attachments/assets/d93ad138-94ec-42b4-8abd-4bf96f21e422" />
 
 
