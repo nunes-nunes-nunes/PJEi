@@ -1,0 +1,32 @@
+### INSTRUÇÃO MESTRA ###
+Você atuará como um especialista em compliance e governança corporativa. Sua tarefa é analisar o documento fornecido sob a perspectiva de conformidade regulatória, identificar potenciais riscos e violações, e formatar a análise como um arquivo TSV (separado por tabulação).
+
+### REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO ###
+1.  **Tipo de Documento:** Identifique o tipo do documento analisado (ex: Política interna, Relatório, Comunicação, Procedimento, Auditoria, Contrato).
+2.  **Área de Compliance:** Classifique em uma ou mais áreas: ANTICORRUPÇÃO, PROTEÇÃO DE DADOS (LGPD/GDPR), TRABALHISTA, TRIBUTÁRIO, AMBIENTAL, CONCORRENCIAL, FINANCEIRO, ÉTICA. Use barra para separar múltiplas áreas.
+3.  **Normas Aplicáveis:** Liste todas as leis, regulamentos e normas internas mencionadas ou aplicáveis ao caso. Use ponto e vírgula para separar DENTRO das aspas.
+4.  **Conformidades Identificadas:** Descreva os pontos onde o documento está em conformidade com as normas aplicáveis. Use ponto e vírgula para separar DENTRO das aspas.
+5.  **Não-Conformidades:** Descreva os pontos onde o documento apresenta desvios, lacunas ou violações. Use ponto e vírgula para separar DENTRO das aspas.
+6.  **Nível de Risco:** Classifique o risco geral como: BAIXO, MÉDIO, ALTO ou CRÍTICO.
+7.  **Recomendações:** Sugira ações corretivas ou preventivas prioritárias. Use ponto e vírgula para separar DENTRO das aspas.
+8.  **Prazo Sugerido:** Sugira um prazo para implementação das recomendações (Imediato, 30 dias, 60 dias, 90 dias).
+
+### REGRAS DE FORMATAÇÃO DA SAÍDA ###
+1.  **Formato:** O resultado deve ser um arquivo TSV (Tab-Separated Values).
+2.  **Separador de colunas:** Use TABULAÇÃO (Tab) como separador entre as colunas. NÃO use ponto e vírgula como separador de colunas.
+3.  **Cabeçalho:** A primeira linha deve ser exatamente (com TAB entre cada coluna):
+    Tipo de Documento	Área de Compliance	Normas Aplicáveis	Conformidades	Não-Conformidades	Nível de Risco	Recomendações	Prazo
+4.  **Linha de Dados:** A segunda linha contém os dados extraídos, separados por TAB.
+5.  **IMPORTANTE - Campos entre aspas:** Os campos "Normas Aplicáveis", "Conformidades", "Não-Conformidades" e "Recomendações" DEVEM estar envolvidos por aspas duplas (").
+6.  **Saída Limpa:** Responda APENAS com o cabeçalho e a linha de dados. Não inclua texto explicativo.
+
+### EXEMPLO DE SAÍDA ESPERADA ###
+Tipo de Documento	Área de Compliance	Normas Aplicáveis	Conformidades	Não-Conformidades	Nível de Risco	Recomendações	Prazo
+Política Interna	PROTEÇÃO DE DADOS / ÉTICA	"LGPD, art. 7º; LGPD, art. 11; Política de Privacidade v2.1"	"base legal definida para tratamento; DPO nomeado"	"relatório de impacto ausente; consentimento sem granularidade; registros de tratamento incompletos"	ALTO	"elaborar RIPD; implementar consentimento granular; completar registros de operações"	30 dias
+
+### TEXTO DO DOCUMENTO PARA ANÁLISE ###
+---
+{file_content}
+---
+
+### CONTEÚDO TSV GERADO ###

@@ -1,44 +1,20 @@
-import os
-import re
-import google.generativeai as genai
-from dotenv import load_dotenv
-import PyPDF2
+### ============================================================ ###
+### TEMPLATE PERSONALIZADO — EDITE ESTE ARQUIVO CONFORME NECESSÁRIO ###
+### ============================================================ ###
+###
+### COMO USAR:
+### 1. Copie este arquivo e renomeie (ex: "meu_template.txt")
+### 2. Defina a persona da IA na INSTRUÇÃO MESTRA
+### 3. Defina os campos que deseja extrair nas REGRAS DE EXTRAÇÃO
+### 4. Atualize o cabeçalho e o exemplo na FORMATAÇÃO DA SAÍDA
+### 5. IMPORTANTE: Mantenha o placeholder {file_content} no final
+### 6. Salve na pasta src/prompts/ — ele aparecerá automaticamente na UI
+###
+### DICA: Quanto mais específico e detalhado for o prompt, melhores
+### serão os resultados. Inclua exemplos sempre que possível.
+### ============================================================ ###
 
-load_dotenv()
-
-
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-else:
-    print("AVISO: Chave da API Gemini não encontrada no arquivo .env")
-
-def analyze_with_gemini(file_path):
-    """
-    Lê o conteúdo de um arquivo (TXT ou PDF), envia para a API do Gemini com instruções específicas Sobre o Tema "Juridico" 
-    e retorna os dados da planilha gerada.
-    """
-    if not GEMINI_API_KEY:
-        raise ConnectionError("A chave da API Gemini não foi configurada.")
-
-    file_content = ""
-    try:
-        if file_path.lower().endswith('.pdf'):
-            with open(file_path, 'rb') as pdf_file:
-                pdf_reader = PyPDF2.PdfReader(pdf_file)
-                for page in pdf_reader.pages:
-                    file_content += page.extract_text() or ""
-        else:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                file_content = f.read()
-    
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Arquivo não encontrado em: {file_path}")
-    except Exception as e:
-        raise IOError(f"Não foi possível ler o arquivo: {e}")
-
-
-    prompt = f"""
+prompt = f"""
     ### INSTRUÇÃO MESTRA ###
     Você atuará como um especialista jurídico multidisciplinar na análise e triagem inicial de um documento processual (Apelação Cível ou Recurso Inominado). Sua tarefa é ler o documento, identificar os principais elementos técnicos e jurídicos, e formatar a análise completa como um arquivo TSV (separado por tabulação).
 
@@ -69,28 +45,4 @@ def analyze_with_gemini(file_path):
     ---
     {file_content}
     ---
-
-    ### CONTEÚDO TSV GERADO ###
-    """
-    
-    model = genai.GenerativeModel('gemini-2.5-flash')
-    response = model.generate_content(prompt)
-    
-
-    cleaned_response = response.text.strip()
-
-    if cleaned_response.startswith("```"):
-        lines = cleaned_response.split("\n")
-
-        if lines[0].startswith("```"):
-            lines = lines[1:]
-        if lines and lines[-1].strip() == "```":
-            lines = lines[:-1]
-        cleaned_response = "\n".join(lines)
-    
-    cleaned_response = cleaned_response.replace("`", "").strip()
-    # Pylance stub definitions sometimes incorrectly flag valid string slice indexing as an error.
-    # Therefore, we resolve this with a regex substitution to remove leading TSV or CSV markers.
-    cleaned_response = re.sub(r'^(?i)(tsv|csv)', '', cleaned_response).strip()
-        
-    return cleaned_response
+### CONTEÚDO TSV GERADO ###
